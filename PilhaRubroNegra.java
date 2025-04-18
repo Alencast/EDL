@@ -2,23 +2,23 @@ public class PilhaRubroNegra implements Pilha{
 
     private int capacidade;
     private Object[] a;
-    private int PilhaVermelha;
-    private int PilhaPreta;
+    private int TopoVermelho;
+    private int TopoPreto;
     private int FC;
 
 //constructor
 public PilhaRubroNegra(int capacidade, int crescimento){
 
     this.capacidade = capacidade;
-    this.PilhaVermelha = -1;
-    this.PilhaPreta = capacidade;
+    this.TopoVermelho = -1;
+    this.TopoPreto = capacidade;
     this.a = new Object[capacidade];
 
 }
 
 private boolean isFull(){
 
-    return (PilhaVermelha +1) == PilhaPreta;
+    return (TopoVermelho +1) == TopoPreto;
 }
 
 public size(){
@@ -35,25 +35,25 @@ public void pushVermelho(Object o){
 
         Object[] b = new Object[capacidade];
 
-        //PilhaVermelha
-        for(int i = 0; i <= PilhaVermelha; i++){
+        //TopoVermelho
+        for(int i = 0; i <= TopoVermelho; i++){
 
             b[i] = a[i];
         }
 
-        //PilhaPreta
-        for(int i = capacidade -1; i >= PilhaPreta; i--){
+        //TopoPreto
+        for(int i = capacidade -1; i >= TopoPreto; i--){
             
 
             b[i] = a[i];
         }
         
-        PilhaPreta = size() - PilhaPreta;
+        TopoPreto = size() - TopoPreto;
         a = b;
             
     }
 
-    a[++PilhaVermelha] = o;
+    a[++TopoVermelho] = o;
     
     
 
