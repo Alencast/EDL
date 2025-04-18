@@ -1,10 +1,10 @@
-public class PilhaRubroNegra implements Pilha{
+public class PilhaRubroNegra{
 
-    private int capacidade;
-    private Object[] a;
-    private int TopoVermelho;
-    private int TopoPreto;
-    private int FC;
+    public int capacidade;
+    public Object[] a;
+    public int TopoVermelho;
+    public int TopoPreto;
+    public int FC;
 
 //constructor
 public PilhaRubroNegra(int capacidade, int crescimento){
@@ -16,12 +16,25 @@ public PilhaRubroNegra(int capacidade, int crescimento){
 
 }
 
+public Object pop(){
+
+    return a[capacidade -1];
+}
+
+public Object top(){
+
+    return capacidade;
+}
+public boolean isEmpty(){
+
+    return TopoVermelho == -1;
+}
 private boolean isFull(){
 
     return (TopoVermelho +1) == TopoPreto;
 }
 
-public size(){
+public int size(){
 
     return capacidade;
 }
@@ -41,14 +54,14 @@ public void pushVermelho(Object o){
             b[i] = a[i];
         }
 
+        int j = capacidade -1;
         //TopoPreto
-        for(int i = capacidade -1; i >= TopoPreto; i--){
-            
+        for(int i = a.length - 1; i >= TopoPreto; i--){            
 
-            b[i] = a[i];
+            b[j--] = a[i];
         }
         
-        TopoPreto = size() - TopoPreto;
+        TopoPreto = j -1;
         a = b;
             
     }
@@ -56,6 +69,34 @@ public void pushVermelho(Object o){
     a[++TopoVermelho] = o;
     
     
+
+}
+
+public void pushPreto(Object o){
+
+    if(isFull()){
+
+        capacidade *= 2;
+
+        Object[] b = new Object[capacidade];
+
+        for(int i = 0; i <= TopoVermelho; i++){
+
+            b[i] = a[i];
+        }
+
+        int j = capacidade -1;
+
+        for(int i = a.length -1; i >= TopoPreto; i--){
+
+            b[j--] = a[i];
+        }
+        
+        TopoPreto = j + 1;
+
+        a = b;
+    }
+    a[--TopoPreto] = o;
 
 }
 
