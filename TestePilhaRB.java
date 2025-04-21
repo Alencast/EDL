@@ -18,7 +18,22 @@ public class TestePilhaRB {
     
     System.out.println("Valor novo do TV: " + PRB.TopoVermelho);
     System.out.println("Valor novo do TP: " + PRB.TopoPreto);
+    
+    for(int i = 0; i < 5; i++){
+        PRB.pushPreto(sc.next());
+    }
+    
+    System.out.println("Valor novo do TV: " + PRB.TopoVermelho);
+    System.out.println("Valor novo do TP: " + PRB.TopoPreto);
+    
 
+    System.out.println("Estado final do array:");
+for (int i = 0; i < 4; i++) {
+    System.out.println("a[" + i + "] = " + PRB.a[i]);
+}
+
+    Object top = PRB.top();
+    System.out.println(top);
     sc.close();
     
    }

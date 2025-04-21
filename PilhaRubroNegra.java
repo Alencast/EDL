@@ -16,19 +16,70 @@ public PilhaRubroNegra(int capacidade, int crescimento){
 
 }
 
-public Object pop(){
 
-    return a[capacidade -1];
+private void redimensionarArray(int novaCapacidade){
+    
+    Object[] b = new Object[novaCapacidade];
+
+    for(int i = 0; i <= TopoVermelho; i++){
+
+        b[i] = a[i];
+    }
+
+    int novoTopoPreto = novaCapacidade - (capacidade - TopoPreto);
+    int j = novaCapacidade - 1;
+
+    for(int i = a.length - 1;i >= TopoPreto;i--){
+
+        b[j--] = a[i];
+    }
+
+    TopoPreto = novoTopoPreto;
+    a = b;
+    capacidade = novaCapacidade;
+}
+
+
+public void popVermelho(){
+
+    if(isEmptyVermelho()){
+        throw new PilhaVaziaExcecao("Pilha vermelha vazia!"); 
+    }   
+
+    a[TopoVermelho--] = null; 
+
+    if((TopoVermelho + 1) + (capacidade - TopoPreto) <= (capacidade/3)){
+
+        int novaCapacidade = capacidade / 2;
+        redimensionarArray(novaCapacidade);
+
+    }
+}
+
+public void popPreto(){
+
+    if(isEmptyPreto()){
+
+        throw new PilhaVaziaExcecao("Pilha preta vazia");
+    }
+
+    a[TopoPreto++] = null;
 }
 
 public Object top(){
 
-    return capacidade;
+    return this.a[capacidade - 1];
 }
-public boolean isEmpty(){
+public boolean isEmptyVermelho(){
 
     return TopoVermelho == -1;
 }
+
+public boolean isEmptyPreto(){
+
+    return TopoPreto == -1;
+}
+
 private boolean isFull(){
 
     return (TopoVermelho +1) == TopoPreto;
