@@ -64,6 +64,14 @@ public void popPreto(){
     }
 
     a[TopoPreto++] = null;
+
+    if((TopoVermelho + 1) + (capacidade - TopoPreto) <= (capacidade / 3)){
+
+        int novaCapacidade = capacidade / 2;
+        redimensionarArray(novaCapacidade);
+    }
+
+   
 }
 
 public Object top(){
