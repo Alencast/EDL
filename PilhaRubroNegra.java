@@ -1,3 +1,4 @@
+//Robson Alves de Alencastro - TADS/EDL
 public class PilhaRubroNegra{
 
     public int capacidade;
@@ -74,10 +75,16 @@ public void popPreto(){
    
 }
 
-public Object top(){
-
-    return this.a[capacidade - 1];
+public Object topVermelho() {
+    if (isEmptyVermelho()) throw new PilhaVaziaExcecao("Pilha vermelha vazia!");
+    return a[TopoVermelho];
 }
+
+public Object topPreto() {
+    if (isEmptyPreto()) throw new PilhaVaziaExcecao("Pilha preta vazia!");
+    return a[TopoPreto];
+}
+
 public boolean isEmptyVermelho(){
 
     return TopoVermelho == -1;
@@ -85,7 +92,7 @@ public boolean isEmptyVermelho(){
 
 public boolean isEmptyPreto(){
 
-    return TopoPreto == -1;
+    return TopoPreto == capacidade;
 }
 
 private boolean isFull(){
@@ -93,9 +100,13 @@ private boolean isFull(){
     return (TopoVermelho +1) == TopoPreto;
 }
 
-public int size(){
+public int sizeVermelho(){
 
-    return capacidade;
+    return TopoVermelho + 1;
+}
+public int sizePreto(){
+
+    return capacidade - TopoPreto;
 }
 
 public void pushVermelho(Object o){
