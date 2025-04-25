@@ -131,7 +131,7 @@ public void pushVermelho(Object o){
             b[j--] = a[i];
         }
         
-        TopoPreto = j +1;
+        TopoPreto = j + 1;
         a = b;
             
     }
