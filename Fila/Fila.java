@@ -22,37 +22,39 @@ public class Fila {
         return capacidade == tamanho;
     }
 
-    public void enqueue(Object o){
+   public void enqueue(Object o){
 
-        if(isFull()){
-            
-            this.capacidade *= 2;
+    if(isFull()){
 
-            Object[] b = new Object[capacidade];
+        this.capacidade *= 2;
+        Object[] b = new Object[capacidade];
+        int j = 0;
 
-            if(fim >= inicio){
+        if(inicio <= fim){
 
-                for(int i = inicio; i <= fim; i++){
-                    b[i] = a[i];
+            for(int i = inicio; i <= fim; i++){
+                b[j++] = a[i];
             }
+        }
+        else{
 
-            if(inicio > fim){
-
-                int j = 0;
-                for(int i = inicio; i <= a.length-1; i++){
-
-                    b[j++] = a[i];
-             }
-                for(int i = 0; i <= fim; i++){
-                    
-                    b[j++] = a[i];
-                }
+            for(int i = inicio; i < a.length; i++){
+                
+                b[j++] = a[i];
             }
-            a = b;
-            inicio = 0;
-            fim = tamanho - 1;
-           
-        }       
+            for(int i = 0; i <= fim; i++){
+                
+                b[j++] = a[i];
+            }
+        }
+        a=b;
+        inicio = 0;
+        fim = (tamanho-1);
+    }
+    fim = (fim+1) % capacidade;
+    a[fim] = o;
+    tamanho++;
+}         
         
         
         fim = (fim + 1) % capacidade;
