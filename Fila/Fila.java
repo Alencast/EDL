@@ -19,7 +19,7 @@ public class Fila {
 
     public boolean isFull() {
 
-        return capacidade == tamanho;
+        return capacidade == tamanho; //size()== N-1
     }
 
    public void enqueue(Object o){
@@ -32,7 +32,7 @@ public class Fila {
 
         if(inicio <= fim){
 
-            for(int i = inicio; i <= fim; i++){
+            for(int i = inicio; i < fim; i++){
                 b[j++] = a[i];
             }
         }
@@ -42,7 +42,7 @@ public class Fila {
                 
                 b[j++] = a[i];
             }
-            for(int i = 0; i <= fim; i++){
+            for(int i = 0; i < fim; i++){
                 
                 b[j++] = a[i];
             }
