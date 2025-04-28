@@ -57,13 +57,6 @@ public class Fila {
 }         
         
         
-        fim = (fim + 1) % capacidade;
-        a[fim] = o;
-        tamanho++; 
-
-        
-    }
-    
   }
 
 }
