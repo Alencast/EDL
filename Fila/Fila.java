@@ -17,9 +17,13 @@ public class Fila {
         this.fim = 0;
     }
 
+    
+    public int size(){
+        return tamanho;
+    }
     public boolean isFull() {
 
-        return capacidade == tamanho; //size()== N-1
+        return size()== tamanho - 1
     }
 
    public void enqueue(Object o){
