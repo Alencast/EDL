@@ -17,13 +17,9 @@ public class Fila {
         this.fim = 0;
     }
 
-    
-    public int size(){
-        return tamanho;
-    }
     public boolean isFull() {
 
-        return size()== tamanho - 1
+        return capacidade == tamanho; //size()== N-1
     }
 
    public void enqueue(Object o){
@@ -59,6 +55,17 @@ public class Fila {
     a[fim] = o;
     tamanho++;
 }         
+    public void dequeue() {
+    if (isEmpty()) {
+        throw new PilhaException("Fila vazia!");
+    }
+    
+    a[inicio] = null; 
+    
+    inicio = (inicio + 1) % capacidade;
+    tamanho--;
+}
+
         
         
   }
