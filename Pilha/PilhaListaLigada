@@ -1,0 +1,35 @@
+public class PilhaListaLigada{
+    
+    private class Node{
+        int value;
+        Node prev; //Lista duplamente ligada
+        Node next;       
+
+        Node(int value){
+            this.value = value;
+            this.prev = null;
+            this.next = null;
+        }       
+    }
+
+    private Node topo;
+
+    public void pushLinkedList(int value){
+
+        Node novo = new Node(value);
+        novo.next = topo;
+        topo = novo;
+    }
+
+        public int popLinkedList(){
+            
+            if(topo == null){
+
+                throw new IllegalStateException("Pilha vazia");
+            }
+
+            int value = topo.value;
+            topo = topo.next;
+            return  value;
+        }
+}
