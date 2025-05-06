@@ -70,8 +70,8 @@ public class LinkedList{
         
         Node no_atual = head;
         
-        while(no_atual.getNext() != p){ // O que fazer se a lista estiver vazia?
-            no_atual = no_atual.getNext();
+        while(no_atual.getNext() != p){ // O que fazer se a lista estiver vazia?  
+            no_atual = no_atual.getNext(); //lembrar de separar o método de busca
             
             
         }
