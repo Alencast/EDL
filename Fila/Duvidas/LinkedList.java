@@ -144,4 +144,17 @@ public class LinkedList{
        no_atual1.setValue(no_atual2.getValue());
        no_atual2.setValue(temporario);    
     }
+
+    public void insertBefore(Node n, int o){
+
+        Node no_atual = head;
+
+        while(no_atual != n && no_atual != null){
+            no_atual = no_atual.getNext();
+        }
+
+        
+    }
+
+
 }
