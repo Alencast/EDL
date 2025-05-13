@@ -40,16 +40,19 @@ public class Fila{
         
     }
     
-    public void dequeue(){
+    public Object dequeue(){
         
         if(tamanho == 0){
             
             System.out.println("Fila vazia");
-            return;
+            return null;
         }
         
-      a[inicio] = null;
-      inicio = (inicio + 1) % capacidade;
-      tamanho --;
+        Object result = a[inicio];
+        a[inicio] = null;
+        inicio = (inicio + 1) % capacidade;
+        tamanho --;
+
+        return result;
     }
 }
