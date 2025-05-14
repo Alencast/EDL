@@ -43,23 +43,24 @@ public class Pilha{
         tamanho ++;
     }
     
-    public void desempilhar(){
+    public Object desempilhar(){
         
         if(isEmpty()){
             
-           System.out.println("Pilha vazia");
-           return;
+           throw new IllegalArgumentException("A pilha está vazia");
         }
         
+        Object removido = a[fim];
         a[fim--] = null;
         tamanho--;
+
+        return removido;
     }
     
     public Object topo(){
         
         if(isEmpty()){
-            System.out.println("Pilha vazia");
-            return null;
+            throw new IllegalArgumentException("Pilha vazia");
         }    
     
     return a[fim];
