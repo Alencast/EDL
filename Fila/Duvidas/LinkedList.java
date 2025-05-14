@@ -1,7 +1,6 @@
 public class LinkedList{
     
     private class Node{
-        
         int value;
         Node prev;
         Node next;
@@ -37,124 +36,134 @@ public class LinkedList{
     private Node head;
     private Node tail;
     
+    //Métodos genéricos
     public int size(){
         
         int contador = 0;
         Node no_atual = head;
         
         while(no_atual != null){
-            
-            no_atual = no_atual.getNext();
             contador++;
+            no_atual = no_atual.getNext();
+            
         }
         return contador;
     }
     
-    public boolean isEmpty(){
-        return head == null;
+    private boolean isEmpty(){
+        return head == 0;
     }
     
-    public boolean isFirst(int value){
-        return head.value == value;
+    
+    //Métodos de fila;
+    public boolean isFirst(Node n){
+        return n == head;
     }
     
-    public boolean isLast(int value){
-        return tail.value == value;
+    public boolean isLast(Node n){
+        return n == tail;
     }
     
-    public int first(){
-        return head.value;
+    //Métodos para acessar
+    public Node first(){
+        return head;
+    }
+    public Node last(){
+        return tail;
     }
     
-    public int last(){
-        return tail.value;
+    //Método para buscar
+    public Node buscar(Node p){
+        
+        Node no_atual = head;
+        
+        while(no_atual != null && no_atual != p){
+            
+            no_atual = no_atual.getNext();
+        }
+        
+        
+        return no_atual;
     }
     
-   public Node before(Node p){
-       
-       Node no_atual = head;
-       
-       while(no_atual != p && no_atual != null){
-           no_atual = no_atual.getNext();
-       }
-       
-       if(no_atual == null){
-           
-           return null; // p não tá na lista
-       }
-       return no_atual.getPrev();
+    public Node before(Node p){
+        
+       return p.getPrev();
     }
-   
+    
     public Node after(Node p){
         
-        Node no_atual = head;
-        
-        while(no_atual != p && no_atual != null){
-            
-            no_atual = no_atual.getNext();
-            
-        }
-        
-        if(no_atual == null){
-           
-           return null; // p não tá na lista
-       }
-       
-        return no_atual.getNext();
+        return p.getNext();
     }
-   
-    //Métodos para atualizar a lista
-
-    public void replaceElement(Node n, Node o){
-
-        Node no_atual = head;
-
-        while(no_atual != n && no_atual != null){
-            no_atual = no_atual.getNext();
-        }
-
-        if(no_atual != null){ 
-            no_atual.setValue(o.getValue());
-       }
-
-       else{
-        throw new IllegalArgumentException("n não está na lista");
-       }
+    
+    //Métodos para atualizar
+    public void replaceElement(Node n, int o){
+        
+        n.setValue(o);
     }
-
     
     public void swapElements(Node n, Node q){
         
-        Node no_atual1 = head;
-
-        while(no_atual1 != n && no_atual1 != null){
-
-            no_atual1 = no_atual1.getNext();
-        }
-
-        Node no_atual2 = head;
-
-        while(no_atual2 != q && no_atual2 != null){
-
-            no_atual2 = no_atual2.getNext();
-        }
-
-       int temporario = no_atual1.getValue();
-
-       no_atual1.setValue(no_atual2.getValue());
-       no_atual2.setValue(temporario);    
+        int temporario = n.getValue();
+        
+        n.setValue(q.getValue());
+        q.setValue(temporario);
     }
-
+    
     public void insertBefore(Node n, int o){
-
-        Node no_atual = head;
-
-        while(no_atual != n && no_atual != null){
-            no_atual = no_atual.getNext();
+        
+       Node no_atual = new Node(o);
+       
+       no_atual.setNext(n);
+       no_atual.setPrev(n.getPrev());
+       
+       if(n.getPrev() != null){
+           
+           n.getPrev().setNext(no_atual);
+       }
+       else{
+           head = no_atual;
+       }
+       
+       n.setPrev(no_atual);
+    }
+    
+    public void insertAfter(Node n, int o){
+        
+        Node no_atual = new Node(o);
+        
+        no_atual.setPrev(n);
+        no_atual.setNext(n.getNext());
+        
+        if(n.getNext() != null){
+            
+            n.getNext().setPrev(no_atual);
         }
-
+        
+        else{
+            
+            tail = no_atual;
+        }
+        
+        n.setNext(no_atual);
+    }
+    
+    public void remove(Node n){
+        
+       if(n.getPrev() != null){
+            n.getPrev().setNext(n.getNext());
+       }
+       else{
+           head = n.getNext();
+       }
+       
+       if(n.getNext() != null){
+           
+           n.getNext().setPrev(n.getPrev());
+       }
+       
+       tail = n.getPrev();
         
     }
-
-
+    
 }
