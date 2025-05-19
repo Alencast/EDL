@@ -51,7 +51,7 @@ public class LinkedList{
     }
     
     private boolean isEmpty(){
-        return head == 0;
+        return head == null;
     }
     
     
@@ -164,6 +164,41 @@ public class LinkedList{
        
        tail = n.getPrev();
         
+    }
+
+     public void insertFirst(int o){
+        
+        Node no_atual = new Node(o);
+        
+       if(isEmpty()){
+           
+           head = no_atual;
+           tail = no_atual;
+       }
+       else{
+           
+            no_atual = head;
+            head.setPrev(no_atual);
+            head = no_atual;
+       }
+    }
+    
+    public void insertLast(int o){
+        
+        Node no_atual = new Node(o);
+        
+        if(isEmpty()){
+            
+            head = no_atual;
+            tail = no_atual;
+        }
+        else{
+            
+            no_atual = tail;
+            tail.setNext(no_atual);
+            tail = no_atual;
+            
+        }
     }
     
 }
