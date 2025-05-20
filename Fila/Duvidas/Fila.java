@@ -51,7 +51,7 @@ public class Fila{
         Object result = a[inicio];
         a[inicio] = null;
         inicio = (inicio + 1) % capacidade;
-        tamanho --;
+        tamanho--;
 
         return result;
     }
