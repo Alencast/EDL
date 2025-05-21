@@ -1,0 +1,213 @@
+class LinkedList {
+
+    // Classe interna Node
+    public class Node {
+        int value;
+        Node prev;
+        Node next;
+
+        Node(int value) {
+            this.value = value;
+            this.prev = null;
+            this.next = null;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+    }
+
+    private Node head;
+    private Node tail;
+
+    // Getters para head e tail
+    public Node getHead() {
+        return head;
+    }
+
+    public Node getTail() {
+        return tail;
+    }
+
+    public int size() {
+        int contador = 0;
+        Node no_atual = head;
+
+        while (no_atual != null) {
+            contador++;
+            no_atual = no_atual.getNext();
+        }
+
+        return contador;
+    }
+
+    public Node search(Node n) {
+        Node no_atual = head;
+
+        while (no_atual != n && no_atual != null) {
+            no_atual = no_atual.getNext();
+        }
+        return no_atual;
+    }
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public boolean isFirst(Node n) {
+        return head == n;
+    }
+
+    public boolean isLast(Node n) {
+        return tail == n;
+    }
+
+    public int first() {
+        return head.value;
+    }
+
+    public int after() {
+        return tail.value;
+    }
+
+    public void replaceElement(Node n, Object o) {
+        n.setValue((int) o);
+    }
+
+    public void swapElements(Node n, Node q) {
+        int temp = n.getValue();
+        n.setValue(q.getValue());
+        q.setValue(temp);
+    }
+
+    public void insertBefore(Node n, Object o) {
+        Node no_atual = new Node((int) o);
+
+        no_atual.setPrev(n.getPrev());
+        no_atual.setNext(n);
+
+        if (n.getPrev() != null) {
+            n.getPrev().setNext(no_atual);
+        } else {
+            head = no_atual;
+        }
+
+        n.setPrev(no_atual);
+    }
+
+    public void insertAfter(Node n, Object o) {
+        Node no_atual = new Node((int) o);
+
+        no_atual.setPrev(n);
+        no_atual.setNext(n.getNext());
+
+        if (n.getNext() != null) {
+            n.getNext().setPrev(no_atual);
+        } else {
+            tail = no_atual;
+        }
+        n.setNext(no_atual);
+    }
+
+    public void insertFirst(Object o) {
+        Node novo = new Node((int) o);
+        if (head == null) {
+            head = tail = novo;
+        } else {
+            novo.setNext(head);
+            head.setPrev(novo);
+            head = novo;
+        }
+    }
+
+    public void insertLast(Node n, Object o) {
+        Node novo = new Node((int) o);
+        if (tail == null) {
+            head = tail = novo;
+        } else {
+            tail.setNext(novo);
+            novo.setPrev(tail);
+            tail = novo;
+        }
+    }
+
+    public void remove(Node n) {
+        if (n.getPrev() != null) {
+            n.getPrev().setNext(n.getNext());
+        } else {
+            head = n.getNext();
+        }
+
+        if (n.getNext() != null) {
+            n.getNext().setPrev(n.getPrev());
+        } else {
+            tail = n.getPrev();
+        }
+    }
+}
+
+// Classe principal com main
+public class Main {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+
+        // Inserindo no início
+        list.insertFirst(10);
+        list.insertFirst(5);
+        list.insertLast(list.getTail(), 20);
+        list.insertLast(list.getTail(), 30);
+
+        LinkedList.Node n1 = list.getHead();                // 5
+        LinkedList.Node n2 = n1.getNext();                  // 10
+        LinkedList.Node n3 = n2.getNext();                  // 20
+        LinkedList.Node n4 = n3.getNext();                  // 30
+
+        System.out.println("Lista vazia? " + list.isEmpty());
+        System.out.println("Tamanho: " + list.size());
+        System.out.println("Primeiro elemento: " + list.first());
+        System.out.println("Último elemento: " + list.after());
+        System.out.println("n1 é o primeiro? " + list.isFirst(n1));
+        System.out.println("n4 é o último? " + list.isLast(n4));
+
+        list.replaceElement(n2, 15);
+        System.out.println("Valor de n2 após replace: " + n2.getValue());
+
+        list.swapElements(n1, n4);
+        System.out.println("n1: " + n1.getValue());
+        System.out.println("n4: " + n4.getValue());
+
+        list.insertBefore(n3, 17);
+        System.out.println("Valor antes de 20: " + n3.getPrev().getValue());
+        System.out.println("Novo tamanho: " + list.size());
+
+        list.insertAfter(n3, 22);
+        System.out.println("Valor depois de 20: " + n3.getNext().getValue());
+        System.out.println("Novo tamanho: " + list.size());
+
+        list.remove(n3); // remove o nó com valor 20
+        System.out.println("Tamanho após remover 20: " + list.size());
+
+        LinkedList.Node after17 = list.getHead().getNext().getNext().getNext();
+        System.out.println("Valor após 17: " + after17.getValue());
+    }
+}
