@@ -1,0 +1,149 @@
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== TESTANDO DEQUE ===");
+        
+        // Teste 1: Inserção e remoção básica
+        Deque deque = new Deque(3);
+        deque.inserirFim(10);
+        deque.inserirInicio(5);
+        deque.inserirFim(15);
+        
+        System.out.println("\nTeste 1 - Operações básicas:");
+        System.out.println(deque.primeiro().equals(5) ? "✅ primeiro() OK" : "❌ primeiro() Erro");
+        System.out.println(deque.ultimo().equals(15) ? "✅ ultimo() OK" : "❌ ultimo() Erro");
+        System.out.println(deque.removerInicio().equals(5) ? "✅ removerInicio() OK" : "❌ removerInicio() Erro");
+        System.out.println(deque.removerFim().equals(15) ? "✅ removerFim() OK" : "❌ removerFim() Erro");
+
+        // Teste 2: Comportamento circular
+        Deque dequeCircular = new Deque(3);
+        dequeCircular.inserirFim(1);
+        dequeCircular.inserirFim(2);
+        dequeCircular.removerInicio();
+        dequeCircular.inserirFim(3);
+        
+        System.out.println("\nTeste 2 - Comportamento circular:");
+        System.out.println(dequeCircular.removerInicio().equals(2) ? "✅ Circular OK" : "❌ Circular Erro");
+
+        // Teste 3: Redimensionamento
+        Deque dequeRedimensiona = new Deque(2);
+        dequeRedimensiona.inserirFim(10);
+        dequeRedimensiona.inserirFim(20);
+        dequeRedimensiona.inserirFim(30); // Deve redimensionar aqui
+        
+        System.out.println("\nTeste 3 - Redimensionamento:");
+        System.out.println(dequeRedimensiona.removerInicio().equals(10) ? "✅ Redimensiona OK" : "❌ Redimensiona Erro");
+        System.out.println(dequeRedimensiona.removerFim().equals(30) ? "✅ Redimensiona OK" : "❌ Redimensiona Erro");
+
+        // Teste 4: Deque vazio
+        try {
+            new Deque(1).removerFim();
+            System.out.println("\n❌ Falhou: deveria lançar exceção");
+        } catch (RuntimeException e) {
+            System.out.println("\n✅ Exceção deque vazio OK: " + e.getMessage());
+        }
+
+        System.out.println("\n=== TODOS TESTES CONCLUÍDOS ===");
+    }
+}
+
+class Deque {
+    private int capacidade;
+    private int tamanho;
+    private Object[] a;
+    private int inicio;
+    private int fim;
+    
+    public Deque(int capacidade) {
+        this.capacidade = capacidade;
+        this.tamanho = 0;
+        this.a = new Object[capacidade];
+        this.inicio = 0;
+        this.fim = 0;
+    }
+    
+    private boolean isFull() {
+        return tamanho == capacidade;
+    }
+    
+    public boolean isEmpty() {
+        return tamanho == 0;
+    }
+    
+    public void inserirInicio(Object o) {
+        if(isFull()) {
+            int novacap = capacidade * 2;
+            Object[] b = new Object[novacap];
+            
+            for(int i = 0; i < tamanho; i++) {
+                b[i] = a[(inicio + i) % capacidade];
+            }
+            a = b;
+            capacidade = novacap;
+            inicio = 0;
+            fim = tamanho;
+        }
+        
+        inicio = (inicio - 1 + capacidade) % capacidade;
+        a[inicio] = o;
+        tamanho++;
+    }
+    
+    public Object removerInicio() {
+        if(isEmpty()) {
+            throw new RuntimeException("Deque vazio");
+        }
+        Object removed = a[inicio];
+        
+        a[inicio] = null;
+        inicio = (inicio + 1) % capacidade;
+        tamanho--;
+        
+        return removed;
+    }
+     
+    public void inserirFim(Object o) {
+        if(isFull()) {
+            int novacap = capacidade * 2;
+            Object[] b = new Object[novacap];
+            
+            for(int i = 0; i < tamanho; i++) {
+                b[i] = a[(inicio + i) % capacidade];
+            }
+            
+            a = b;
+            inicio = 0;
+            fim = tamanho;
+            capacidade = novacap;
+        }
+        a[fim] = o;
+        fim = (fim + 1) % capacidade;
+        tamanho++;
+    }
+     
+    public Object removerFim() {
+        if(isEmpty()) {
+            throw new RuntimeException("Deque vazio");
+        }
+        
+        fim = (fim - 1 + capacidade) % capacidade;
+        Object removed = a[fim];
+        a[fim] = null;
+        tamanho--;
+        
+        return removed;
+    }
+     
+    public Object primeiro() {
+        if(isEmpty()) {
+            throw new RuntimeException("Deque vazio");
+        }
+        return a[inicio];
+    }
+     
+    public Object ultimo() {
+        if(isEmpty()) {
+            throw new RuntimeException("Deque vazio");
+        }
+        return a[(fim - 1 + capacidade) % capacidade];
+    }
+}
