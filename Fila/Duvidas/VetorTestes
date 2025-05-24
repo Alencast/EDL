@@ -42,7 +42,7 @@ public class Main {
 }
 
 class Vetor {
-    // [SUA IMPLEMENTAÇÃO ORIGINAL AQUI - SEM MODIFICAÇÕES]
+  
     private Object[] a;
     private int tamanho;
     
