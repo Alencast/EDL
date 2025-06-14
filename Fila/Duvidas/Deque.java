@@ -1,12 +1,13 @@
-public class Deque{
+public class Deque{ 
     
-    private int capacidade;
-    private int tamanho;
-    private Object[] a;
-    private int inicio;
-    private int fim;
+    public int capacidade;
+    public int tamanho;
+    public Object[] a;
+    public int inicio;
+    public int fim;
     
-    public Deque(int capacidade){
+    public Deque(int capacidade){ 
+        
         this.capacidade = capacidade;
         this.tamanho = 0;
         this.a = new Object[capacidade];
@@ -14,91 +15,86 @@ public class Deque{
         this.fim = 0;
     }
     
-    private boolean isFull(){
-        return tamanho == capacidade;
+    public boolean isFull(){ 
+        
+        return capacidade == tamanho;
     }
     
-    public void inserirInicio(Object o){
+    public boolean isEmpty(){ 
         
-        if(isFull()){
-            
-            int novacap = capacidade * 2;
-            Object[] b = new Object[novacap];
-            
-            for(int i = 0; i < tamanho; i++){
-                b[i] = a[(inicio + i) % capacidade];
-            }
-            a = b;
-            inicio = 0;
-            fim = tamanho;
-            capacidade = novacap;
+        return tamanho == 0;
+    }
+    
+    public void inserirInicio(Object o){ 
+        
+        if(isFull()){ 
+           int novacap = capacidade * 2;
+           Object[] b = new Object[novacap];
+           
+           for(int i = 0; i < tamanho; i++){ 
+               
+               b[i] = a[(inicio + i) % capacidade];
+           }
+           
+           a = b;
+           capacidade = novacap;
+           inicio = 0;
+           fim = tamanho;
+        } 
+        
+        inicio = (inicio - 1) % capacidade;
+        a[inicio] = o;
+        tamanho++;
+    }
+    
+    public Object removerInicio(){ 
+        
+        if(isEmpty()){ 
+            throw new IllegalStateException("vazio");
         }
         
-        inicio = (inicio - 1 + capacidade) % capacidade;
-        a[inicio] = o;
-        tamanho ++;
-            
-    }
-    
-    public void removerInicio(){
-        
-        if(tamanho == 0){
-            System.out.println("Deque vazio");
-            return;
-    }
+        Object removido = a[inicio];
         a[inicio] = null;
         inicio = (inicio + 1) % capacidade;
-        tamanho --;
-    
+        tamanho--;
+        return removido;
     }
     
-    public void inserirFim(Object o){
+    public void inserirFim(Object o){ 
         
-        if(isFull()){
+        if(isFull()){ 
             int novacap = capacidade * 2;
             Object[] b = new Object[novacap];
             
-            for(int i = 0; i < tamanho; i++){
+            for(int i = 0; i < tamanho; i++){ 
                 b[i] = a[(inicio + i) % capacidade];
             }
             
             a = b;
+            capacidade = novacap;
             inicio = 0;
             fim = tamanho;
-            capacidade = novacap;
-            
         }
         
         a[fim] = o;
         fim = (fim + 1) % capacidade;
-        tamanho ++;
+        tamanho++;
     }
     
-    public void removerFim(){
+    public Object removerFim(){ 
         
-        if(tamanho == 0){
+        if(isEmpty()){ 
             
-            System.out.println("Deque vazio");
-            return;
+            throw new IllegalStateException("vazio");
         }
         
-        fim = (fim -1 + capacidade) % capacidade;
+        fim = (fim - 1) % capacidade;
+        Object removido = a[fim];
         a[fim] = null;
-        tamanho --;
+        tamanho--;
+        
+        return removido;
     }
-    
-    public Object primeiro(){
-        return inicio;
-    }
-    
-    public Object ultimo(){
-        return fim;
-    }
-    
-    public boolean isEmpty(){
-        return tamanho == 0;
-    }
-    
     
     
 }
