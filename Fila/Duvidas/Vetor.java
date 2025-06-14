@@ -1,83 +1,73 @@
-public class Vetor{
+public class Vetor{ 
     private Object[] a;
     private int tamanho;
-
-    public Vetor(int capacidade){
+    private int capacidade;
+    
+    public Vetor(int capacidade){ 
+        this.capacidade = capacidade;
         this.a = new Object[capacidade];
-        this.tamanho = 0;        
+        this.tamanho = 0;
     }
-
-    public int size(){
+    
+    public int size(){ 
         return tamanho;
     }
-
-    public boolean isEmpty(){
+    
+    public boolean isFull() {
+        return tamanho == capacidade;
+    }
+    
+    public boolean isEmpty(){ 
         return tamanho == 0;
     }
-
-    public Object elemAtRank(int r){
-
-        if(r < 0 || r >= tamanho){
-            throw new IndexOutOfBoundsException("Posição inválida");
-        }
-
+    
+    public Object elemAtRank(int r){ 
         return a[r];
-
     }
-
-    public Object replaceAtRank(int r, Object o){
+    
+    public Object replaceAtRank(Object o, int r){ 
         
-        if(r < 0 || r >= tamanho){
-            throw new IndexOutOfBoundsException("Index inválido");
-        }
-
         Object replaced = a[r];
         a[r] = o;
         return replaced;
     }
-
-
-    public void insertAtRank(int r, Object o){
-
-        if(r < 0 || r > tamanho){
-            throw new IndexOutOfBoundsException("Index inválido");
-        }
-
-       if(tamanho == a.length){
+    
+    public void insertAtRank(int r, Object o){  
+        
+        if(isFull()){ 
+            int novacap = capacidade * 2;
+            Object[] b = new Object[novacap];
+            for(int i = 0; i < capacidade; i++){ 
+                b[i] = a[i];
+            }
             
-        Object[] b = new Object[a.length * 2];
-        for(int i = 0; i < tamanho; i++){
-            b[i] = a[i];
+            a = b;
+            capacidade = novacap;
         }
-
-        a = b;
-       }
-
-       for(int i = tamanho; i > r; i--){
-            
-            a[i] = a[i - 1];
-       }
-
-       a[r] = o;
-       tamanho++;
+        
+        for(int i = tamanho; i > r; i--){ 
+            a[i] = a[i-1];
+        }
+        
+        a[r] = o;
+        tamanho++;
+       
     }
-
-    public Object removeAtRank(int r){
-
-         if (r < 0 || r >= tamanho) {
-            throw new IndexOutOfBoundsException("Posição inválida para remoção: " + r);
+    
+    public Object removeAtRank(int r){ 
+        
+        if(isEmpty()){ 
+            throw new IllegalStateException("vazio");
         }
-
+        
         Object removed = a[r];
-
-       for(int i = r; i < tamanho - 1; i++){
-
-        a[i] = a[i+1];
-       }   
-
-       a[tamanho - 1] = null;
-       tamanho--;
-       return removed;
-
+        for(int i = r; i < tamanho-1 ; i++){ 
+            a[i] = a[i+1];
+        }
+        a[tamanho-1] = null; 
+        
+        tamanho--;
+        return removed;
+        
     }
 }
